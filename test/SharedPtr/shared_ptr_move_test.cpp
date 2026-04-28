@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "../../src/SharedPtr.hpp"
+#include "SharedPtr.hpp"
 #include "test_helpers.hpp"
 
 namespace ef::smart_pointers {

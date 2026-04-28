@@ -61,6 +61,8 @@ inline SharedPtr<T>& SharedPtr<T>::operator=(const SharedPtr& other) {
       control_block->add_shared();
     }
   }
+  // auto tmp = SharedPtr<T>(other);
+  // std::swap(tmp, *this);
   return *this;
 }
 
@@ -75,17 +77,17 @@ inline SharedPtr<T>& SharedPtr<T>::operator=(SharedPtr&& other) {
     other.control_block = nullptr;
     other.ptr = nullptr;
   }
+  // auto tmp = SharedPtr<T>(std::move(other));
+  // std::swap(tmp, *this);
   return *this;
 }
 
 template <typename T>
-inline void SharedPtr<T>::reset() {
-  if (control_block) {
-    control_block->release_shared();
-    control_block = nullptr;
-    ptr = nullptr;
-  }
+inline void SharedPtr<T>::reset(T* ptr) {
+  auto tmp = SharedPtr<T>(ptr);
+  std::swap(tmp, *this);
 }
+
 template <typename T>
 inline size_t SharedPtr<T>::use_count() const noexcept {
   return control_block ? control_block->use_count() : 0;

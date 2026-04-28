@@ -12,7 +12,7 @@ class ControlBlockBase {
   ControlBlockBase(ControlBlockBase&&) = delete;
   ControlBlockBase& operator=(ControlBlockBase&&) = delete;
 
-  virtual ~ControlBlockBase() = default;
+  virtual ~ControlBlockBase() noexcept = default;
 
   void add_shared() noexcept { shared_count_++; }
   void release_shared();
@@ -49,7 +49,7 @@ template <typename T>
 class ControlBlockWithTInplace : public ControlBlockBase<T> {
  public:
   template <typename... Args>
-  explicit ControlBlockWithTInplace(Args... args) {
+  explicit ControlBlockWithTInplace(Args&&... args) {
     new (storage) T(std::forward<Args>(args)...);
   }
   ~ControlBlockWithTInplace() override = default;

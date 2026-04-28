@@ -2,8 +2,8 @@
 
 #include <utility>
 
-#include "../../src/SharedPtr.hpp"
-#include "../../src/WeakPtr.hpp"
+#include "SharedPtr.hpp"
+#include "WeakPtr.hpp"
 
 namespace ef::smart_pointers {
 

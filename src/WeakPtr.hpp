@@ -12,12 +12,12 @@ class WeakPtr {
   WeakPtr();
   WeakPtr(const SharedPtr<T>& shared);
   WeakPtr(const WeakPtr& other);
-  WeakPtr(WeakPtr&& other);
-  ~WeakPtr();
+  WeakPtr(WeakPtr&& other) noexcept;
+  ~WeakPtr() noexcept;
 
   WeakPtr& operator=(const SharedPtr<T>& shared);
   WeakPtr& operator=(const WeakPtr& other);
-  WeakPtr& operator=(WeakPtr&& other);
+  WeakPtr& operator=(WeakPtr&& other) noexcept;
 
   SharedPtr<T> lock() const;
   bool expired() const;

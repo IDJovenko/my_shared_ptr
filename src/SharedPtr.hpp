@@ -11,7 +11,7 @@ class WeakPtr;
 template <typename T>
 class SharedPtr {
  public:
-  SharedPtr(T* ptr = nullptr);
+  explicit SharedPtr(T* ptr = nullptr);
   SharedPtr(const SharedPtr& other) noexcept;
   SharedPtr(SharedPtr&& other) noexcept;
   ~SharedPtr() noexcept;
@@ -25,8 +25,8 @@ class SharedPtr {
   T* operator->() const noexcept { return ptr; };
   explicit operator bool() const noexcept { return ptr != nullptr; }
 
-  // reset() must be noexcept, but it can throw if the destructor of T throws.
-  void reset();
+  // reset must be noexcept, but it can throw if the destructor of T throws.
+  void reset(T* ptr = nullptr);
   T* get() const noexcept { return ptr; }
   size_t use_count() const noexcept;
 
@@ -35,10 +35,9 @@ class SharedPtr {
   friend SharedPtr<U> makeShared(Args&&... args);
 
  private:
-  // This constructor is used by the WeakPtr when creating a SharedPtr from a
-  // WeakPtr. It isn't incrementing the shared count to allow the WeakPtr use an
-  // atomic compare-and-swap operation with the shared count to ensure that the
-  // object is still alive when creating the SharedPtr.
+  // It isn't incrementing the shared count,
+  // use ControlBlockBase::add_shared() to increment the shared count when
+  // creating a SharedPtr from a control block.
   explicit SharedPtr(ControlBlockBase<T>* control_block);
 
   ControlBlockBase<T>* control_block = nullptr;

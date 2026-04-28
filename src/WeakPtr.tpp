@@ -20,13 +20,13 @@ inline WeakPtr<T>::WeakPtr(const WeakPtr& other)
   }
 }
 template <typename T>
-inline WeakPtr<T>::WeakPtr(WeakPtr&& other) {
+inline WeakPtr<T>::WeakPtr(WeakPtr&& other) noexcept {
   control_block = other.control_block;
   other.control_block = nullptr;
 }
 
 template <typename T>
-inline WeakPtr<T>::~WeakPtr() {
+inline WeakPtr<T>::~WeakPtr() noexcept {
   if (control_block) {
     control_block->release_weak();
   }
@@ -57,7 +57,7 @@ inline WeakPtr<T>& WeakPtr<T>::operator=(const WeakPtr& other) {
   return *this;
 }
 template <typename T>
-inline WeakPtr<T>& WeakPtr<T>::operator=(WeakPtr&& other) {
+inline WeakPtr<T>& WeakPtr<T>::operator=(WeakPtr&& other) noexcept {
   if (this != &other) {
     if (control_block) {
       control_block->release_weak();

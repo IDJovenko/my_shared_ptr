@@ -5,7 +5,7 @@
 #include <new>
 #include <stdexcept>
 
-#include "../../src/SharedPtr.hpp"
+#include "SharedPtr.hpp"
 
 // Счётчик вызовов деструктора для проверки, что объекты не удаляются при
 // выбрасывании исключения в конструкторе.

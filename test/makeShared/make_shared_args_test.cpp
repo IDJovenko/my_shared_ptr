@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../../src/SharedPtr.hpp"
+#include "SharedPtr.hpp"
 
 namespace ef::smart_pointers {
 
